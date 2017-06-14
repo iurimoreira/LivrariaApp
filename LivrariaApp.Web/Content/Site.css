@@ -1,0 +1,98 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Ajustes particulares*/
+.box-livro {
+    background-color: #cecece;
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+.p-titulo {
+    font-size: 2em;
+}
+
+.menu-acoes-livro {
+    margin-top: 2em;
+    list-style: none;
+    padding: 0;
+}
+
+    .menu-acoes-livro .item-acao-livro {
+        display: inline;
+        padding: 1em 3em;
+        background-color: cornflowerblue;
+        margin-right: 1em;
+    }
+
+        .menu-acoes-livro .item-acao-livro:first-child {
+            margin-right: 1em;
+        }
+
+        .menu-acoes-livro .item-acao-livro a {
+            color: white;
+        }
+
+.bt-novo-livro {
+    padding: 1em 3em;
+    background-color: teal;
+    color: white;
+    margin: 4em 0 0em 0;
+    display: inline-block;
+}
+
+.titulo-lista {
+    margin-bottom: 1em;
+}
+
+.navbar-nav {
+    float: right !important;
+}
+
+    .navbar-nav li {
+        color: white;
+        text-transform: uppercase;
+    }
+
+#sub-menu {
+    width: 100%;
+    position: relative;
+    margin-bottom: 6em;
+}
+
+    #sub-menu .column-sub-menu {
+        background-color: #999;
+        color: white;
+        width: 50%;
+        float: left;
+        text-align: center;
+        padding: 1.5em 0;
+    }
+
+        #sub-menu .column-sub-menu:last-child {
+            background-color: #666;
+        }
+
+        #sub-menu .column-sub-menu a {
+            color: white !important;
+        }
+
+        #sub-menu .column-sub-menu p {
+            margin: 0 !important;
+            text-transform: uppercase;
+        }

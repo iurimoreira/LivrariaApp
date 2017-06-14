@@ -17,10 +17,15 @@ namespace Livraria.App.Api.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public LivrosController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+
         // GET: api/Livros
         public IQueryable<Livro> GetLivros()
         {
-            return db.Livros;
+            return db.Livros.AsQueryable();
         }
 
         // GET: api/Livros/5

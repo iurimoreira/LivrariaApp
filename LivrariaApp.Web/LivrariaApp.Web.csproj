@@ -270,10 +270,13 @@
     <Content Include="Views\Autores\Criar.cshtml" />
     <Content Include="Views\Autores\Editar.cshtml" />
     <Content Include="Views\Autores\Detalhes.cshtml" />
+    <Content Include="Views\Livros\Index.cshtml" />
+    <Content Include="Views\Livros\Criar.cshtml" />
+    <Content Include="Views\Livros\Editar.cshtml" />
+    <Content Include="Views\Livros\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Livros\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div>
+    <a class="bt-novo-livro" href="@Url.Action("Criar","Livros")"> Adicionar novo livro </a>
+    <br /> <br />
+    <h2 class="titulo-lista"> Todos os livros cadastrados no sistema </h2>
+
+
+    @foreach (var book in ViewBag.listBooks)
+    {
+        <div class="box-livro">
+            <p class="p-titulo"><strong>Título:</strong> @book.Titulo</p>
+            <p class="p-isbn"><strong>ISBN:</strong> @book.Isbn</p>
+
+            <ul class="menu-acoes-livro">
+                <li class="item-acao-livro">
+                    <a href="@Url.Action("Detalhes","Livros",new {id = book.LivroId})">Detalhes</a>
+                </li>
+                <li class="item-acao-livro">
+                    <a onclick="return confirm('Você deseja deletar este livro?')" href="@Url.Action("Delete","Livros", new {id= book.LivroId})">Deletar</a>
+                </li>
+                <li class="item-acao-livro">
+                    <a href="@Url.Action("Editar","Livros",new {id = book.LivroId})">Editar</a>
+                </li>
+            </ul>
+
+
+        </div>
+    }
+
+</div>
+
+

@@ -17,7 +17,7 @@ namespace LivrariaApp.Web.Models.Clientes
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(Base_URL);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.GetAsync("Livros").Result;
+                HttpResponseMessage response = client.GetAsync("api/Livros").Result;
 
                 if (response.IsSuccessStatusCode)
                     return response.Content.ReadAsAsync<IEnumerable<Livro>>().Result;
@@ -35,7 +35,7 @@ namespace LivrariaApp.Web.Models.Clientes
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(Base_URL);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.GetAsync("livros/" + id).Result;
+                HttpResponseMessage response = client.GetAsync("api/livros/" + id).Result;
 
                 if (response.IsSuccessStatusCode)
                     return response.Content.ReadAsAsync<LivroViewModel>().Result;
@@ -53,7 +53,7 @@ namespace LivrariaApp.Web.Models.Clientes
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(Base_URL);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.PostAsJsonAsync("Livros", livro).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync("api/Livros", livro).Result;
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -68,7 +68,7 @@ namespace LivrariaApp.Web.Models.Clientes
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(Base_URL);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.PutAsJsonAsync("livros/" + livro.LivroId, livro).Result;
+                HttpResponseMessage response = client.PutAsJsonAsync("api/livros/" + livro.LivroId, livro).Result;
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -83,7 +83,7 @@ namespace LivrariaApp.Web.Models.Clientes
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(Base_URL);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.DeleteAsync("livros/" + id).Result;
+                HttpResponseMessage response = client.DeleteAsync("api/livros/" + id).Result;
                 return response.IsSuccessStatusCode;
             }
             catch

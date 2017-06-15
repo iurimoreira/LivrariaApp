@@ -5,6 +5,11 @@ namespace LivrariaApp.Domain
 {
     public class Autor
     {
+        public Autor()
+        {
+            this.Livros = new HashSet<Livro>();
+        }
+
         public int AutorId { get; set; }
 
         public string Nome { get; set; }

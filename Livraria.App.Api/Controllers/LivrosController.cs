@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Livraria.App.Api.Models;
 using LivrariaApp.Domain;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace Livraria.App.Api.Controllers
 {
@@ -84,11 +86,22 @@ namespace Livraria.App.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+            else
+            {
+                Livro livroTemp = new Livro(livro.Isbn, livro.Titulo, livro.Ano);
 
-            db.Livros.Add(livro);
-            db.SaveChanges();
+                livroTemp.Autores = new Collection<Autor>();
 
-            return CreatedAtRoute("DefaultApi", new { id = livro.LivroId }, livro);
+                for (int i = 0; i < livro.Autores.Count; i++)
+                {
+                    livroTemp.Autores.Add(db.Autores.Find(livro.Autores.ElementAt<Autor>(i).AutorId));
+                }
+
+                db.Livros.Add(livroTemp);
+                db.SaveChanges();
+
+                return CreatedAtRoute("DefaultApi", new { id = livro.LivroId }, livro);
+            }
         }
 
         // DELETE: api/Livros/5

@@ -6,11 +6,13 @@ namespace LivrariaApp.Web.Controllers
 {
     public class AutoresController : Controller
     {
-        private AutorCliente AC = new AutorCliente();
+        //private LivroCliente LC = new LivroCliente();
+        //private AutorCliente AC = new AutorCliente();
+        private DbContext db = new DbContext();
 
         public ActionResult Index()
         {
-            ViewBag.listAutores = AC.pegarTodos();
+            ViewBag.listAutores = db.pegarTodosAutores();
             return View();
         }
         [HttpGet]
@@ -21,33 +23,33 @@ namespace LivrariaApp.Web.Controllers
         [HttpPost]
         public ActionResult Criar(AutorViewModel autor)
         {
-            AC.Criar(autor);
+            db.CriarAutor(autor);
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            AC.Delete(id);
+            db.DeleteAutor(id);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Editar(int id)
         {
             AutorViewModel autor = new AutorViewModel();
-            autor = AC.encontrar(id);
+            autor = db.encontrarAutor(id);
             return View("Editar", autor);
         }
         [HttpPost]
         public ActionResult Editar(AutorViewModel autor)
         {
-            AC.Editar(autor);
+            db.EditarAutor(autor);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Detalhes(int id)
         {
             AutorViewModel autor = new AutorViewModel();
-            autor = AC.encontrar(id);
+            autor = db.encontrarAutor(id);
             return View("Detalhes", autor);
         }
     }

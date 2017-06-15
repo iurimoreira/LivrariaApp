@@ -9,13 +9,23 @@ namespace LivrariaApp.Web.Models.Clientes
     {
         private string Base_URL = "http://localhost:64317/api";
 
+        private static HttpClient clientConfiguration()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:64317/api");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            return client;
+        }
+
         public IEnumerable<AutorViewModel> pegarTodos()
         {
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(Base_URL);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //HttpClient client = new HttpClient();
+                //client.BaseAddress = new Uri(Base_URL);
+                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var client = clientConfiguration();
                 HttpResponseMessage response = client.GetAsync("api/Autores").Result;
 
                 if (response.IsSuccessStatusCode)

@@ -8,20 +8,21 @@ namespace LivrariaApp.Web.Controllers
 {
     public class LivrosController : Controller
     {
-        private LivroCliente LC = new LivroCliente();
-        private AutorCliente AC = new AutorCliente();
+        //private LivroCliente LC = new LivroCliente();
+        //private AutorCliente AC = new AutorCliente();
+        private DbContext db = new DbContext();
 
         public ActionResult Index()
         {
-            ViewBag.listBooks = LC.pegarTodos();
-
+            ViewBag.listBooks = db.pegarTodosLivros();
+            ViewBag.listAutores = db.pegarTodosAutores();
             return View();
         }
         [HttpGet]
         public ActionResult Criar()
         {
 
-            ViewBag.listAutores = new SelectList(AC.pegarTodos(), "AutorId", "Nome");
+            ViewBag.listAutores = new SelectList(db.pegarTodosAutores(), "AutorId", "Nome");
             return View("Criar");
         }
         [HttpPost]
@@ -29,38 +30,38 @@ namespace LivrariaApp.Web.Controllers
         {
             foreach (var item in Autores)
             {
-                livro.Autores.Add(AC.encontrar(item));
+                livro.Autores.Add(db.encontrarAutor(item));
             }
 
-            LC.Criar(livro);
+            db.CriarLivro(livro);
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            LC.Delete(id);
+            db.DeleteLivro(id);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Editar(int id)
         {
-            ViewBag.listAutores = new SelectList(AC.pegarTodos(), "AutorId", "Nome");
+            ViewBag.listAutores = new SelectList(db.pegarTodosAutores(), "AutorId", "Nome");
 
             LivroViewModel livro = new LivroViewModel();
-            livro = LC.encontrar(id);
+            livro = db.encontrarLivro(id);
             return View("Editar", livro);
         }
         [HttpPost]
         public ActionResult Editar(Livro livro)
         {
-            LC.Editar(livro);
+            db.EditarLivro(livro);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Detalhes(int id)
         {
             LivroViewModel livro = new LivroViewModel();
-            livro = LC.encontrar(id);
+            livro = db.encontrarLivro(id);
             return View("Detalhes", livro);
         }
     }

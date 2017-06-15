@@ -96,3 +96,7 @@ textarea {
             margin: 0 !important;
             text-transform: uppercase;
         }
+
+.mg-top-menor {
+    margin-top:1.4em !important;
+}

@@ -4,6 +4,7 @@ using LivrariaApp.Web.Models.Clientes;
 
 namespace LivrariaApp.Web.Controllers
 {
+    [Authorize]
     public class AutoresController : Controller
     {
         //private LivroCliente LC = new LivroCliente();

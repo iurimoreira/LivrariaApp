@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace LivrariaApp.Web.Controllers
 {
+    [Authorize]
     public class LivrosController : Controller
     {
         //private LivroCliente LC = new LivroCliente();

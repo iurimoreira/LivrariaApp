@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LivrariaApp.Web.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace LivrariaApp.Web.Controllers
 {
@@ -17,9 +19,16 @@ namespace LivrariaApp.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private HttpClient _client;
 
         public AccountController()
         {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri("http://localhost:64317/");
+            _client.DefaultRequestHeaders.Accept.Clear();
+
+            var mediaType = new MediaTypeWithQualityHeaderValue("application/json");
+            _client.DefaultRequestHeaders.Accept.Add(mediaType);
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -151,24 +160,22 @@ namespace LivrariaApp.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar um email com este link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar sua conta", "Confirme sua conta clicando <a href=\"" + callbackUrl + "\">aqui</a>");
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", null, protocol: Request.Url.Scheme);
+                model.CallbackUrl = callbackUrl;
 
-                    return RedirectToAction("Index", "Home");
+                var response = await _client.PostAsJsonAsync("api/Account/Register", model);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return View("Login");
                 }
-                AddErrors(result);
+                else
+                {
+                    ViewBag.error = "Este email já foi utilizado anteriormente.";
+                    View(model);
+                }
             }
 
-            // Se chegamos até aqui e houver alguma falha, exiba novamente o formulário
             return View(model);
         }
 
@@ -392,7 +399,7 @@ namespace LivrariaApp.Web.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Livros");
         }
 
         //
